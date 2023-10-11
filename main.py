@@ -12,7 +12,11 @@ df = pd.read_csv('emails.csv')
 X = df['email'].astype(str)  # Email text
 y = df['label_num']  # Labels (spam or ham)
 print(df.head())
+spam_count = len(df[df['label_num'] == 1])
+ham_count = len(df[df['label_num'] == 0])
 
+print(f"Spam Count: {spam_count}")
+print(f"Ham Count: {ham_count}")
 # Convert labels to binary (0 for ham, 1 for spam)
 y = np.where(y == 'spam', 1, 0)
 
@@ -41,7 +45,7 @@ model.add(Dense(1, activation='sigmoid'))
 
 model.compile(optimizer='adam', loss='binary_crossentropy', metrics=['accuracy'])
 
-epochs = 5  # Adjust the number of training epochs
+epochs = 3  # Adjust the number of training epochs
 batch_size = 25
 
 model.fit(X_train_pad, y_train, epochs=epochs, batch_size=batch_size, validation_data=(X_test_pad, y_test))
